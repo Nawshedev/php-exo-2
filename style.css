@@ -13,3 +13,9 @@ td {
 td {
   padding: 10px;
 }
+
+body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}

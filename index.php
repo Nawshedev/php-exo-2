@@ -12,7 +12,8 @@
 </head>
 <body>
 
-<section class="form1">
+<section class=left>
+<div class="form1">
 <form action="traitement.php" method="post">
 
 <h2>Adresse client</h2>
@@ -43,29 +44,29 @@
 
 </form>
 
-</section>
+</div>
 
 
-<!-- Formulaire 2 -->
+<!-- Formulaire 2  - exercice 3-->
 
 <h2>Email client</h2>
 
-<section class="form2">
+<div class="form2">
 
 <form action="email.php" method="post">
 
 <label for="email">E-mail</label>
-<input type="email" name="email" id="" required><br>
+<input type="email" name="email" required><br>
 
 <input type="submit" value="Envoyer" name="valider2"><br>
 
 
 </form>
 
-</section>
+</div>
 
 
-<!-- Formulaire 3 -->
+<!-- Formulaire 3 - exercice 4-->
 
 <h2>Prix TTC</h2>
 
@@ -73,19 +74,23 @@
 
 $TVArate=$HT="";
 
-if($_SERVER["REQUEST_METHOD"]=="POST"){
+
+if($_SERVER["REQUEST_METHOD"]=="POST" && isset($TVArate) && isset($HT) && !empty($TVArate) && !empty($HT)){
   $TVArate=$_POST["TVA"];
   $HT=$_POST["HTprice"];
-  $TVAamount=$TVArate*$HT;
+  $TVAamount=$TVArate * $HT;
   $TTC=$HT+$TVAamount;
   $priceShowing="Le montant de la TVA est de: ".$TVAamount."€<br> Le prix TTC est de: ".$TTC."€";
-
+  $error="";
+}
+else{
+  $priceShowing="";
 }
 
   
   ?>
 
-<section class="form3">
+<div class="form3">
   <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 
   <label for="HTprice">Prix HT</label>
@@ -102,8 +107,58 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
   </form>
 
- 
+</div>
 </section>
+
+
+
+<section class="right">
+
+<div class="filesTransfer">
+
+  <!-- Formulaire 4 - exercice 5 -->
+
+  <?php
+  if($_SERVER["REQUEST_METHOD"]=="POST"){
+    $fileName=$_POST["file"];
+
+  }
+  else{
+    $fileName="";
+  }
+  ?>
+
+
+<form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
+
+<h2>Formulaire pour transférer un fichier ZIP </h2>
+
+<label for="file">Choisissez un fichier :</label><br>
+
+<input type="file" name="file" /><br>
+
+<!-- <p><?php echo $error?></p> -->
+
+<p><?php echo "le fichier ".$fileName." a bien été envoyé"?></p>
+<input type="submit" value="envoyer le fichier"/><br>
+
+
+
+
+</form>
+
+
+
+
+
+
+
+</div>
+
+
+</section>
+
+
 
     
 <script src="script.js"></script>
