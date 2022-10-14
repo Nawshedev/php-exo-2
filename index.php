@@ -70,23 +70,33 @@
 <h2>Prix TTC</h2>
 
 <?php
-  if(isset($_POST['HT']) && isset($_POST ["TVA"]) ){
-    $TVArate=$_POST["TVA"];
-    $HT=$_POST["HTprice"];
-    $TVAamount=$TVArate*$HT;
-    $TTC=$HT+$TVAamount;
-    echo "Le montant de la TVA est de: ".$TVAamount."% <br>Le prix TTC est de :".$TTC;
-  }
+
+$TVArate=$HT="";
+
+if($_SERVER["REQUEST_METHOD"]=="POST"){
+  $TVArate=$_POST["TVA"];
+  $HT=$_POST["HTprice"];
+  $TVAamount=$TVArate*$HT;
+  $TTC=$HT+$TVAamount;
+  $priceShowing="Le montant de la TVA est de: ".$TVAamount."€<br> Le prix TTC est de: ".$TTC."€";
+
+}
+
+  
   ?>
 
 <section class="form3">
   <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 
   <label for="HTprice">Prix HT</label>
-  <input type="number" name="HTprice" id=""><br>
+  <input type="number" name="HTprice" id="" value="<?php echo $HT?>"><br>
 
   <label for="TVA">Taux de TVA</label>
-  <input type="number" name="TVA" id=""><br>
+  <input type="number" name="TVA" id="" value="<?php echo $TVArate?>"><br>
+
+  <br>
+
+  <p><?php echo $priceShowing ?></p>
   
   <input type="submit" value="Envoyer"><br>
 
