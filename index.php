@@ -72,20 +72,27 @@
 
 <?php
 
-$TVArate=$HT="";
+
+$submitPrice=$_POST["submitPrice"];
+$priceShowing="";
+$TVArate=$_POST["TVA"];
+$HT=$_POST["HTprice"];
+var_dump($_SERVER["REQUEST_METHOD"]=="POST",isset($TVArate), isset($HT),!empty($TVArate),!empty($HT));
+
+if(isset($submitPrice)){
+  
 
 
-if($_SERVER["REQUEST_METHOD"]=="POST" && isset($TVArate) && isset($HT) && !empty($TVArate) && !empty($HT)){
-  $TVArate=$_POST["TVA"];
-  $HT=$_POST["HTprice"];
+if($_SERVER["REQUEST_METHOD"]=="POST" && isset($TVArate) && isset($HT) && !empty($TVArate) && !empty($HT) ){ 
   $TVAamount=$TVArate * $HT;
   $TTC=$HT+$TVAamount;
   $priceShowing="Le montant de la TVA est de: ".$TVAamount."€<br> Le prix TTC est de: ".$TTC."€";
-  $error="";
-}
-else{
-  $priceShowing="";
-}
+  echo "test";
+  // $error="";
+}}
+// else{
+//   $priceShowing="";
+// }
 
   
   ?>
@@ -94,16 +101,16 @@ else{
   <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 
   <label for="HTprice">Prix HT</label>
-  <input type="number" name="HTprice" id="" value="<?php echo $HT?>"><br>
+  <input type="number" name="HTprice" id="" value="<?php if(isset($HT)){echo $HT;} ?>"><br>
 
   <label for="TVA">Taux de TVA</label>
-  <input type="number" name="TVA" id="" value="<?php echo $TVArate?>"><br>
+  <input type="number" name="TVA" id="" value="<?php if(isset($TVArate)){echo $TVArate;}   ?>"><br>
 
   <br>
 
   <p><?php echo $priceShowing ?></p>
   
-  <input type="submit" value="Envoyer"><br>
+  <input type="submit" value="Envoyer" name="submitPrice"><br>
 
   </form>
 
@@ -119,7 +126,7 @@ else{
   <!-- Formulaire 4 - exercice 5 -->
 
   <?php
-  if($_SERVER["REQUEST_METHOD"]=="POST"){
+  if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST["file"])){
     $fileName=$_POST["file"];
 
   }
